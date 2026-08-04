@@ -1,26 +1,41 @@
 import React from "react";
 import logoImg from "./Images/logo.jpeg";
+import { ArrowRight } from "lucide-react";
+
+const scrollTo = (id) => {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: "smooth" });
+};
 
 const Footer = () => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const navLinks = [
+    { name: "Home", id: "home" },
+    { name: "About", id: "about" },
+    { name: "Services", id: "services" },
+    { name: "Our Work", id: "projects" },
+    { name: "Contact", id: "contact" },
+  ];
+
   return (
     <footer className="bg-[#020617] text-white border-t border-white/10">
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 py-14">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-12 sm:py-14">
 
         {/* MAIN GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
 
-          {/* Brand */}
-          <div>
+          {/* Brand – spans 2 cols on mobile */}
+          <div className="col-span-2 lg:col-span-1">
             <div
               className="flex items-center gap-3 cursor-pointer mb-4"
               onClick={scrollToTop}
             >
-              <div className="w-10 h-10 rounded-full overflow-hidden border border-white/20">
+              {/* SQUARE LOGO */}
+              <div className="w-10 h-10 rounded-xl overflow-hidden border border-white/20 flex-shrink-0">
                 <img
                   src={logoImg}
                   alt="SP Advertising"
@@ -29,109 +44,102 @@ const Footer = () => {
               </div>
 
               <div>
-                <h2 className="text-xl font-bold leading-tight">
-                  SP Advertising
-                </h2>
-                <p className="text-[10px] text-cyan-400 uppercase tracking-widest">
+                <h2 className="text-lg sm:text-xl font-bold leading-tight">SP Advertising</h2>
+                <p className="text-[9px] sm:text-[10px] text-cyan-400 uppercase tracking-widest">
                   Real Estate Growth Systems
                 </p>
               </div>
             </div>
 
-            <p className="text-gray-400 text-sm leading-relaxed mb-4">
-              Helping developers & builders generate quality leads and scale sales using performance marketing & automation.
+            <p className="text-gray-400 text-xs sm:text-sm leading-relaxed mb-5">
+              Helping developers &amp; builders generate quality leads and scale sales using performance marketing &amp; automation.
             </p>
 
-            {/* Social Links Inline */}
-            <div className="flex gap-3 flex-wrap">
-              <a
-                href="https://www.facebook.com/spadvertisingraipur"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs text-gray-400 hover:text-cyan-400 transition"
-              >
-                Facebook
-              </a>
-              <a
-                href="https://www.instagram.com/spadvertisingrpr/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs text-gray-400 hover:text-cyan-400 transition"
-              >
-                Instagram
-              </a>
-              <a
-                href="https://www.linkedin.com/company/sp-advertising20/posts/?feedView=all"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs text-gray-400 hover:text-cyan-400 transition"
-              >
-                LinkedIn
-              </a>
-              <a
-                href="https://www.youtube.com/@spadvertising530"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs text-gray-400 hover:text-cyan-400 transition"
-              >
-                YouTube
-              </a>
+            {/* Social Links */}
+            <div className="flex flex-wrap gap-3">
+              {[
+                { label: "Facebook", href: "https://www.facebook.com/spadvertisingraipur" },
+                { label: "Instagram", href: "https://www.instagram.com/spadvertisingrpr/" },
+                { label: "LinkedIn", href: "https://www.linkedin.com/company/sp-advertising20/posts/?feedView=all" },
+                { label: "YouTube", href: "https://www.youtube.com/@spadvertising530" },
+              ].map((s) => (
+                <a
+                  key={s.label}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-gray-400 hover:text-cyan-400 transition border border-white/10 px-3 py-1.5 rounded-lg hover:border-cyan-400/40"
+                >
+                  {s.label}
+                </a>
+              ))}
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-sm font-semibold mb-4 uppercase tracking-wider">
+            <h4 className="text-xs sm:text-sm font-semibold mb-4 uppercase tracking-wider text-white">
               Quick Links
             </h4>
-            <ul className="space-y-2 text-sm text-gray-400">
-              <li><a href="#home" className="hover:text-cyan-400 transition">Home</a></li>
-              <li><a href="#about" className="hover:text-cyan-400 transition">About</a></li>
-              <li><a href="#services" className="hover:text-cyan-400 transition">Services</a></li>
-              <li><a href="#projects" className="hover:text-cyan-400 transition">Our Work</a></li>
-              <li><a href="#contact" className="hover:text-cyan-400 transition">Contact</a></li>
+            <ul className="space-y-2.5 text-xs sm:text-sm text-gray-400">
+              {navLinks.map((link) => (
+                <li key={link.id}>
+                  <button
+                    onClick={() => scrollTo(link.id)}
+                    className="hover:text-cyan-400 transition text-left"
+                  >
+                    {link.name}
+                  </button>
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* Services */}
           <div>
-            <h4 className="text-sm font-semibold mb-4 uppercase tracking-wider">
+            <h4 className="text-xs sm:text-sm font-semibold mb-4 uppercase tracking-wider text-white">
               Services
             </h4>
-            <ul className="space-y-2 text-sm text-gray-400">
-              <li>Performance Marketing</li>
-              <li>Brand Strategy</li>
-              <li>Lead Generation</li>
-              <li>CRM & Automation</li>
-              <li>AI Telecalling</li>
+            <ul className="space-y-2.5 text-xs sm:text-sm text-gray-400">
+              {["Performance Marketing", "Brand Strategy", "Lead Generation", "CRM & Automation", "AI Telecalling"].map((s) => (
+                <li key={s}>{s}</li>
+              ))}
             </ul>
           </div>
 
           {/* Contact */}
           <div>
-            <h4 className="text-sm font-semibold mb-4 uppercase tracking-wider">
+            <h4 className="text-xs sm:text-sm font-semibold mb-4 uppercase tracking-wider text-white">
               Contact
             </h4>
 
-            <div className="space-y-3 text-sm text-gray-400">
+            <div className="space-y-4 text-xs sm:text-sm text-gray-400">
               <div>
-                <p className="text-xs text-gray-500 uppercase mb-1">Phone</p>
+                <p className="text-[10px] text-gray-500 uppercase mb-1 tracking-wider">Phone</p>
                 <a
                   href="tel:+918085354646"
-                  className="hover:text-cyan-400 transition"
+                  className="hover:text-cyan-400 transition font-medium"
                 >
                   +91-8085354646
                 </a>
               </div>
-
               <div>
-                <p className="text-xs text-gray-500 uppercase mb-1">Email</p>
+                <p className="text-[10px] text-gray-500 uppercase mb-1 tracking-wider">Email</p>
                 <a
                   href="mailto:spadvertising@live.com"
-                  className="hover:text-cyan-400 transition"
+                  className="hover:text-cyan-400 transition font-medium break-all"
                 >
                   spadvertising@live.com
                 </a>
+              </div>
+              <div>
+                <button
+                  onClick={() => scrollTo("contact")}
+                  className="mt-2 flex items-center gap-1.5 text-cyan-400 hover:text-cyan-300 font-semibold transition"
+                >
+                  Get in Touch
+                  <ArrowRight size={13} />
+                </button>
               </div>
             </div>
           </div>
@@ -139,19 +147,14 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-10 pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
-
-          <p>
-            © {new Date().getFullYear()} SP Advertising. All Rights Reserved.
-          </p>
-
+        <div className="mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs sm:text-sm text-gray-500">
+          <p>© {new Date().getFullYear()} SP Advertising. All Rights Reserved.</p>
           <button
             onClick={scrollToTop}
-            className="hover:text-cyan-400 transition"
+            className="hover:text-cyan-400 transition flex items-center gap-1"
           >
             ↑ Back to top
           </button>
-
         </div>
 
       </div>
