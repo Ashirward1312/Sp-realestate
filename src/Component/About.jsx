@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { CheckCircle2, ArrowRight } from "lucide-react";
+import { CheckCircle2, ArrowRight, Layers, TrendingUp, Users } from "lucide-react";
 
 const scrollTo = (id) => {
   const el = document.getElementById(id);
@@ -122,19 +122,41 @@ const About = () => {
             <div className="flex flex-col md:flex-row justify-center items-stretch gap-6 sm:gap-8">
 
               {[
-                { color: "cyan", label: "One Integrated Ecosystem.", desc: "Connecting all your marketing, CRM, and sales efforts seamlessly.", delay: "0s" },
-                { color: "blue", label: "One Growth Strategy.", desc: "A unified, data-driven approach to scale your business efficiently.", delay: "0.2s" },
-                { color: "indigo", label: "One Dedicated Team.", desc: "Focused entirely on delivering results and maximizing your ROI.", delay: "0.4s" },
+                { 
+                  border: "border-cyan-100", 
+                  bgLight: "bg-cyan-50", 
+                  textDark: "text-cyan-500", 
+                  Icon: Layers,
+                  label: "One Integrated Ecosystem.", 
+                  desc: "Connecting all your marketing, CRM, and sales efforts seamlessly.", 
+                  delay: "0s" 
+                },
+                { 
+                  border: "border-blue-100", 
+                  bgLight: "bg-blue-50", 
+                  textDark: "text-blue-500", 
+                  Icon: TrendingUp,
+                  label: "One Growth Strategy.", 
+                  desc: "A unified, data-driven approach to scale your business efficiently.", 
+                  delay: "0.2s" 
+                },
+                { 
+                  border: "border-indigo-100", 
+                  bgLight: "bg-indigo-50", 
+                  textDark: "text-indigo-500", 
+                  Icon: Users,
+                  label: "One Dedicated Team.", 
+                  desc: "Focused entirely on delivering results and maximizing your ROI.", 
+                  delay: "0.4s" 
+                },
               ].map((item, i) => (
                 <div
                   key={i}
-                  className={`flex-1 bg-white p-6 sm:p-8 rounded-3xl shadow-lg border border-${item.color}-100 hover:-translate-y-2 transition-transform duration-300`}
+                  className={`flex-1 bg-white p-6 sm:p-8 rounded-3xl shadow-lg border ${item.border} hover:-translate-y-2 transition-transform duration-300`}
                 >
-                  <div className={`w-12 h-12 sm:w-14 sm:h-14 bg-${item.color}-50 rounded-2xl flex items-center justify-center mx-auto mb-5`}>
-                    <div
-                      className={`w-4 h-4 bg-${item.color}-500 rounded-full animate-pulse`}
-                      style={{ animationDelay: item.delay }}
-                    ></div>
+                  <div className={`w-12 h-12 sm:w-14 sm:h-14 ${item.bgLight} rounded-2xl flex items-center justify-center mx-auto mb-5 group relative overflow-hidden`}>
+                    <item.Icon className={`w-6 h-6 sm:w-7 sm:h-7 ${item.textDark} relative z-10 transition-transform duration-300 group-hover:scale-110`} />
+                    <div className={`absolute inset-0 bg-gradient-to-tr from-transparent to-white/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300`}></div>
                   </div>
                   <h4 className="text-base sm:text-lg font-bold text-gray-900 mb-2 sm:mb-3">{item.label}</h4>
                   <p className="text-sm text-gray-500">{item.desc}</p>
