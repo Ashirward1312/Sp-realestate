@@ -115,7 +115,7 @@ const OurWork = () => {
   /* All stats use the same icon + cyan colour — no rose, no blue */
   const projects = [
     {
-      title: "Classic",
+      title: "Classic Castle",
       image: imgClassic,
       stats: [
         { icon: TrendingUp,  label: "Leads Generated", value: "60+" },
