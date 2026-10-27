@@ -1,15 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { CheckCircle2, ArrowRight, Layers, TrendingUp, Users } from "lucide-react";
 
-const scrollTo = (id) => {
-  const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: "smooth" });
-};
-
 const About = () => {
+  const navigate = useNavigate();
   const sectionRef = useRef(null);
   const graphRef = useRef(null);
   const [progress, setProgress] = useState(0);
+
+  const handleContactCTA = () => {
+    const el = document.getElementById("contact");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      navigate("/contact");
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -197,7 +203,7 @@ const About = () => {
             </p>
 
             <button
-              onClick={() => scrollTo("contact")}
+              onClick={handleContactCTA}
               className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold shadow-lg hover:shadow-cyan-500/30 hover:-translate-y-0.5 active:scale-95 transition-all duration-300"
             >
               Start Growing Today

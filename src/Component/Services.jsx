@@ -1,17 +1,23 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Sparkles, TrendingUp, Target, Users, Globe,
   Database, Phone, MessageSquare, BarChart3,
   ArrowRight, Zap, CheckCircle2,
 } from "lucide-react";
 
-const scrollTo = (id) => {
-  const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: "smooth" });
-};
-
 const Services = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const navigate = useNavigate();
+
+  const handleContactCTA = () => {
+    const el = document.getElementById("contact");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      navigate("/contact");
+    }
+  };
 
   const services = [
     { icon: Sparkles, title: "Branding & Strategy", description: "Create a powerful brand identity and positioning roadmap that sets you apart." },
@@ -76,7 +82,7 @@ const Services = () => {
                 key={index}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
-                onClick={() => scrollTo("contact")}
+                onClick={handleContactCTA}
                 className="group relative bg-white/90 backdrop-blur-md border border-slate-200/90 hover:border-cyan-400/80 rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-sm hover:shadow-xl hover:shadow-cyan-500/10 hover:-translate-y-2 transition-all duration-500 overflow-hidden cursor-pointer select-none"
               >
                 {/* Subtle Glow on Hover */}
@@ -133,8 +139,8 @@ const Services = () => {
             </div>
 
             <button
-              onClick={() => scrollTo("contact")}
-              className="flex-shrink-0 w-full sm:w-auto px-7 sm:px-8 py-3.5 sm:py-4 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white rounded-xl sm:rounded-2xl font-semibold shadow-lg shadow-cyan-600/25 hover:shadow-cyan-600/40 hover:-translate-y-0.5 active:scale-95 transition-all duration-300 flex items-center justify-center gap-2"
+              onClick={handleContactCTA}
+              className="flex-shrink-0 w-full sm:w-auto px-7 sm:px-8 py-3.5 sm:py-4 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white rounded-xl sm:rounded-2xl font-semibold shadow-lg shadow-cyan-600/25 hover:shadow-cyan-600/40 hover:-translate-y-0.5 active:scale-95 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
             >
               Schedule Consultation
               <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />

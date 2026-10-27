@@ -42,7 +42,7 @@ function HomeView() {
       <Services />
       {/* <OurWork /> */}
       <Why />
-      {/* <Contact /> */}
+      <Contact />
     </>
   );
 }
@@ -76,7 +76,12 @@ function OurWorkView() {
 }
 
 function PortfolioView() {
-  return <PortfolioPage />;
+  return (
+    <div>
+      <PortfolioPage />
+      <Contact />
+    </div>
+  );
 }
 
 function ContactView() {

@@ -1,13 +1,23 @@
 import React, { useEffect, useRef } from "react";
 import { ArrowRight, PlayCircle } from "lucide-react";
-
-const scrollTo = (id) => {
-  const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: "smooth" });
-};
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
   const graphRef = useRef(null);
+  const navigate = useNavigate();
+
+  const handleContactCTA = () => {
+    const el = document.getElementById("contact");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      navigate("/contact");
+    }
+  };
+
+  const handleWorkCTA = () => {
+    navigate("/our-work");
+  };
 
   useEffect(() => {
     const handleMove = (e) => {
@@ -122,16 +132,16 @@ const Hero = () => {
           style={{ animation: "fadeUp 0.8s 0.6s ease both" }}
         >
           <button
-            onClick={() => scrollTo("contact")}
-            className="w-full sm:w-auto px-7 sm:px-8 py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 font-semibold shadow-lg hover:shadow-cyan-500/40 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center gap-2"
+            onClick={handleContactCTA}
+            className="w-full sm:w-auto px-7 sm:px-8 py-3.5 sm:py-4 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 font-semibold shadow-lg hover:shadow-cyan-500/40 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
           >
             Let's Grow Your Project
             <ArrowRight size={18} />
           </button>
 
           <button
-            onClick={() => scrollTo("projects")}
-            className="w-full sm:w-auto px-7 sm:px-8 py-3.5 sm:py-4 rounded-full border border-cyan-400 text-cyan-300 hover:bg-cyan-600/20 hover:border-cyan-300 active:scale-95 transition-all duration-300 flex items-center justify-center gap-2"
+            onClick={handleWorkCTA}
+            className="w-full sm:w-auto px-7 sm:px-8 py-3.5 sm:py-4 rounded-full border border-cyan-400 text-cyan-300 hover:bg-cyan-600/20 hover:border-cyan-300 active:scale-95 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
           >
             <PlayCircle size={18} />
             View Our Work

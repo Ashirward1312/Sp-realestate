@@ -1,14 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
-
-const scrollTo = (id) => {
-  const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: "smooth" });
-};
 
 const ApproachAndWhy = () => {
   const sectionRef = useRef(null);
   const [visible, setVisible] = useState(false);
+  const navigate = useNavigate();
+
+  const handleContactCTA = () => {
+    const el = document.getElementById("contact");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      navigate("/contact");
+    }
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -111,7 +117,7 @@ const ApproachAndWhy = () => {
         {/* CTA after Approach */}
         <div className="text-center mt-12 sm:mt-24 mb-16 sm:mb-40">
           <button
-            onClick={() => scrollTo("contact")}
+            onClick={handleContactCTA}
             className="w-full sm:w-auto px-8 sm:px-12 py-4 sm:py-5 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white rounded-xl sm:rounded-2xl font-bold shadow-lg shadow-cyan-600/25 hover:shadow-cyan-600/40 hover:-translate-y-1 active:scale-95 transition-all duration-300 flex items-center justify-center gap-3 mx-auto text-base sm:text-lg max-w-xs sm:max-w-none"
           >
             Start Your Growth Journey
@@ -157,7 +163,7 @@ const ApproachAndWhy = () => {
         {/* Final CTA */}
         <div className="text-center mt-16 sm:mt-28">
           <button
-            onClick={() => scrollTo("contact")}
+            onClick={handleContactCTA}
             className="w-full sm:w-auto px-8 sm:px-14 py-4 sm:py-6 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white rounded-xl sm:rounded-2xl font-bold text-base sm:text-lg shadow-xl shadow-cyan-600/30 hover:shadow-cyan-600/50 hover:-translate-y-1 active:scale-95 transition-all duration-300 flex items-center justify-center gap-3 mx-auto max-w-sm sm:max-w-none"
           >
             Let's Build Your Real Estate Growth System

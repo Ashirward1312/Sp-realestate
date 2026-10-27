@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { X, Play, Image as ImageIcon, Film, ZoomIn, ChevronLeft, ChevronRight, Smartphone, Monitor } from "lucide-react";
 
-import artboard4 from "../Component/Images/Artboard 4-Dyn9OEWK.webp";
-import artboard5 from "../Component/Images/Artboard 5-Daoy-hcx.webp";
+
 import artboard8 from "../Component/Images/Artboard 8-DUvOq2a_.webp";
 import c13 from "../Component/Images/c13-Dq6mWYtk.webp";
 import c14 from "../Component/Images/c14-D4186Dgq.webp";
@@ -35,18 +34,17 @@ import vidRathis from "../Component/Images/rathis build mart.mp4";
 
 /* ─── Media Data ─── */
 const images = [
-  { src: img1, title: "Creative Post 1" },
-  { src: img2, title: "Creative Post 2" },
-  { src: img3, title: "Creative Post 3" },
-  { src: img4, title: "Creative Post 4" },
-  { src: artboard4, title: "Artboard Design 1" },
-  { src: artboard5, title: "Artboard Design 2" },
-  { src: artboard8, title: "Artboard Design 3" },
-  { src: c4, title: "Campaign Creative 1" },
-  { src: c5, title: "Campaign Creative 2" },
-  { src: c6, title: "Campaign Creative 3" },
-  { src: c13, title: "Campaign Creative 4" },
-  { src: c14, title: "Campaign Creative 5" },
+  { src: img1 },
+  { src: img2 },
+  { src: img3 },
+  { src: img4 },
+
+  { src: artboard8},
+  { src: c4},
+  { src: c5},
+  { src: c6},
+  { src: c13},
+  { src: c14},
 ];
 
 const videos = [
@@ -244,14 +242,6 @@ const ReelVideoCard = ({ video, onClick }) => {
         <div className="absolute top-2.5 left-2.5 z-10">
           <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[10px] font-semibold text-white/90 shadow">
             <Smartphone size={10} className="text-pink-400" /> Reel
-          </span>
-        </div>
-
-        {/* Auto indicator */}
-        <div className="absolute top-2.5 right-2.5 z-10">
-          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-pink-500/20 backdrop-blur-md border border-pink-400/30 text-[9px] font-bold text-pink-300">
-            <span className="w-1.5 h-1.5 rounded-full bg-pink-400 animate-pulse" />
-            LIVE
           </span>
         </div>
 

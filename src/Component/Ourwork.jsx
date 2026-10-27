@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   ArrowRight, TrendingUp, Users, MapPin,
   CheckCircle, BarChart2, Home, X, ZoomIn,
@@ -12,11 +13,6 @@ import residential from "./Images/5.jpeg";
 import vidChatbot from "./Images/vid1.mp4";
 import vidAutomation from "./Images/vid2.mp4";
 import vidCrm from "./Images/vid3.mp4";
-
-const scrollTo = (id) => {
-  const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: "smooth" });
-};
 
 /* ─────────────────────────────────────
    STAT ROW — uniform cyan on every card
@@ -128,9 +124,19 @@ const Lightbox = ({ src, title, onClose }) => {
 
 /* ═══════════════════════════════════════════ */
 const OurWork = () => {
+  const navigate = useNavigate();
   const [lightbox, setLightbox] = useState({ src: null, title: "" });
   const openLightbox = (src, title) => setLightbox({ src, title });
   const closeLightbox = () => setLightbox({ src: null, title: "" });
+
+  const handleContactCTA = () => {
+    const el = document.getElementById("contact");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    } else {
+      navigate("/contact");
+    }
+  };
 
   /* All stats use the same icon + cyan colour — no rose, no blue */
   const projects = [
@@ -361,7 +367,7 @@ const OurWork = () => {
           {/* ── CTA ── */}
           <div className="text-center">
             <button
-              onClick={() => scrollTo("contact")}
+              onClick={handleContactCTA}
               className="w-full sm:w-auto px-8 sm:px-10 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-xl sm:rounded-2xl font-semibold shadow-lg hover:shadow-xl hover:shadow-cyan-500/30 hover:-translate-y-1 active:scale-95 transition-all duration-300 flex items-center justify-center gap-3 mx-auto max-w-xs sm:max-w-none"
             >
               Start Your Project Today
