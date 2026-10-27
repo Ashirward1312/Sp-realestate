@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import {
   ArrowRight, TrendingUp, Users, MapPin,
-  CheckCircle, BarChart2, Home, X, ZoomIn
+  CheckCircle, BarChart2, Home, X, ZoomIn,
+  Calendar, Layers, Globe
 } from "lucide-react";
 import imgClassic from "./Images/1.jpeg";
 import imgRais from "./Images/2.jpeg";
@@ -35,39 +36,58 @@ const StatRow = ({ icon: Icon, label, value }) => (
 /* ─────────────────────────────────────
    PROJECT CARD — same structure every time
    ───────────────────────────────────── */
-const ProjectCard = ({ title, image, stats, onImageClick }) => (
-  <div className="bg-white border border-gray-100 rounded-2xl sm:rounded-3xl overflow-hidden shadow-md hover:-translate-y-2 hover:shadow-xl transition-all duration-500 flex flex-col">
+const ProjectCard = ({ title, image, stats, specs, onImageClick }) => (
+  <div className="bg-white border border-gray-100 rounded-2xl sm:rounded-3xl overflow-hidden shadow-md hover:-translate-y-2 hover:shadow-xl transition-all duration-500 flex flex-col h-full">
 
-    {/* Image */}
-    <div
-      className="relative aspect-video overflow-hidden cursor-zoom-in group"
-      onClick={() => onImageClick(image, title)}
-    >
-      <img
-        src={image}
-        alt={title}
-        className="w-full h-full object-cover group-hover:scale-105 transition duration-700"
-      />
-      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center">
-        <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/20 backdrop-blur-sm text-white text-xs font-semibold px-3 py-1.5 rounded-full flex items-center gap-1.5 border border-white/30">
-          <ZoomIn size={13} /> View Full
-        </span>
+    {/* Image — only rendered when provided, no empty space if not present */}
+    {image && (
+      <div
+        className="relative aspect-video overflow-hidden cursor-zoom-in group"
+        onClick={() => onImageClick(image, title)}
+      >
+        <img
+          src={image}
+          alt={title}
+          className="w-full h-full object-cover group-hover:scale-105 transition duration-700"
+        />
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center">
+          <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/20 backdrop-blur-sm text-white text-xs font-semibold px-3 py-1.5 rounded-full flex items-center gap-1.5 border border-white/30">
+            <ZoomIn size={13} /> View Full
+          </span>
+        </div>
       </div>
-    </div>
+    )}
 
     {/* Body */}
-    <div className="p-5 sm:p-6 flex flex-col gap-4 flex-1">
+    <div className={`p-5 sm:p-6 flex flex-col gap-4 flex-1 justify-between ${!image ? "pt-6 sm:pt-7" : ""}`}>
 
-      {/* Title row — same badge style */}
-      <div className="flex items-center gap-3">
-        <span className="w-8 h-8 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center flex-shrink-0">
-          <Home className="w-4 h-4 text-white" />
-        </span>
-        <h4 className="text-sm sm:text-base font-bold text-gray-900 leading-snug">{title}</h4>
+      <div>
+        {/* Title row */}
+        <div className="flex items-center gap-3">
+          <span className="w-8 h-8 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center flex-shrink-0 shadow-sm shadow-cyan-500/20">
+            <Home className="w-4 h-4 text-white" />
+          </span>
+          <h4 className="text-sm sm:text-base font-bold text-gray-900 leading-snug">{title}</h4>
+        </div>
+
+        {/* Optional Specs Badges */}
+        {specs && specs.length > 0 && (
+          <div className="flex flex-wrap gap-1.5 mt-2.5">
+            {specs.map((s, idx) => (
+              <span
+                key={idx}
+                className="text-[10px] sm:text-[11px] font-semibold px-2 py-0.5 rounded-md bg-cyan-50 text-cyan-700 border border-cyan-100"
+              >
+                <span className="text-gray-400 font-normal">{s.label}: </span>
+                {s.value}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Stats */}
-      <div className="flex-1">
+      <div className="flex-1 flex flex-col justify-end">
         {stats.map((stat, i) => (
           <StatRow key={i} icon={stat.icon} label={stat.label} value={stat.value} />
         ))}
@@ -109,7 +129,7 @@ const Lightbox = ({ src, title, onClose }) => {
 /* ═══════════════════════════════════════════ */
 const OurWork = () => {
   const [lightbox, setLightbox] = useState({ src: null, title: "" });
-  const openLightbox  = (src, title) => setLightbox({ src, title });
+  const openLightbox = (src, title) => setLightbox({ src, title });
   const closeLightbox = () => setLightbox({ src: null, title: "" });
 
   /* All stats use the same icon + cyan colour — no rose, no blue */
@@ -118,36 +138,52 @@ const OurWork = () => {
       title: "Classic Castle",
       image: imgClassic,
       stats: [
-        { icon: TrendingUp,  label: "Leads Generated", value: "60+" },
-        { icon: MapPin,      label: "Site Visits",      value: "25+" },
-        { icon: CheckCircle, label: "Bookings",          value: "3"   },
+        { icon: TrendingUp, label: "Leads Generated", value: "60+" },
+        { icon: MapPin, label: "Site Visits", value: "25+" },
+        { icon: CheckCircle, label: "Bookings", value: "3" },
       ],
     },
     {
       title: "Rais Infinity",
       image: imgRais,
       stats: [
-        { icon: Users,       label: "Leads Provided",       value: "60+" },
-        { icon: BarChart2,   label: "Positive Responses",   value: "20+" },
-        { icon: MapPin,      label: "Site Visits",           value: "20+" },
-        { icon: CheckCircle, label: "Bookings",              value: "2"   },
+        { icon: Users, label: "Leads Provided", value: "60+" },
+        // { icon: BarChart2,   label: "Positive Responses",   value: "20+" },
+        { icon: MapPin, label: "Site Visits", value: "20+" },
+        { icon: CheckCircle, label: "Bookings", value: "2" },
       ],
     },
     {
       title: "Godrej Property",
       image: imgGodrej,
       stats: [
-        { icon: Users,  label: "Leads Provided", value: "20+" },
-        { icon: MapPin, label: "Site Visits",     value: "5+"  },
+        { icon: Users, label: "Leads Provided", value: "20+" },
+        { icon: MapPin, label: "Site Visits", value: "5+" },
+      ],
+    },
+    {
+      title: "Avinash Chitwan",
+      specs: [
+        { label: "Plotted", value: "2500 & 5000 sqft" },
+        { label: "Timeline", value: "12 Months" },
+        { label: "Platform", value: "Meta & Google" },
+      ],
+      stats: [
+        { icon: Layers, label: "Plotted Project", value: "2500, 5000 sqft" },
+        { icon: Calendar, label: "Timeline", value: "12 Months" },
+        { icon: Globe, label: "Platform", value: "Meta & Google" },
+        { icon: TrendingUp, label: "Leads Generated", value: "Approx 100-150 / mo" },
+        { icon: MapPin, label: "Site Visit", value: "5-8%" },
+        { icon: CheckCircle, label: "Conversion Rate", value: "2-2.5%" },
       ],
     },
     {
       title: "VB Tower — Leads Generation Campaign",
       image: vb,
       stats: [
-        { icon: TrendingUp,  label: "Leads Generated",                value: "50+" },
-        { icon: BarChart2,   label: "Positive Responses & Site Visits", value: "20+" },
-        { icon: CheckCircle, label: "Bookings",                        value: "5"   },
+        { icon: TrendingUp, label: "Leads Generated", value: "50+" },
+        { icon: MapPin, label: "Site Visits", value: "20+" },
+        { icon: CheckCircle, label: "Bookings", value: "5" },
       ],
     },
   ];
@@ -156,22 +192,20 @@ const OurWork = () => {
   const residentialLeft = {
     label: "Residential Plot",
     stats: [
-      { icon: TrendingUp,  label: "Leads Generated", value: "20" },
-      { icon: MapPin,      label: "Site Visits",      value: "8"  },
-      { icon: CheckCircle, label: "Final Booking",    value: "✓"  },
+      { icon: TrendingUp, label: "Leads Generated", value: "20" },
+      { icon: MapPin, label: "Site Visits", value: "8" },
+      { icon: CheckCircle, label: "Final Booking", value: "✓" },
     ],
   };
   const residentialRight = {
     label: "Krishna Sattavam",
     stats: [
-      { icon: TrendingUp,  label: "Leads Generated", value: "30+" },
-      { icon: MapPin,      label: "Site Visits",      value: "13+" },
-      { icon: CheckCircle, label: "Bookings",         value: "2"   },
+      { icon: TrendingUp, label: "Leads Generated", value: "30+" },
+      { icon: MapPin, label: "Site Visits", value: "13+" },
+      { icon: CheckCircle, label: "Bookings", value: "2" },
     ],
   };
 
-  const topProjects    = projects.slice(0, 3);
-  const bottomProject  = projects[3]; // VB Tower only
 
   return (
     <>
@@ -203,32 +237,21 @@ const OurWork = () => {
             </p>
           </div>
 
-          {/* ── Row 1: 3 cards ── */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-6 sm:mb-8">
-            {topProjects.map((p, i) => (
+          {/* ── Projects Grid: 3-Column Responsive Grid (3 top, 3 bottom) ── */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-16 sm:mb-24">
+            {projects.map((p, i) => (
               <ProjectCard
                 key={i}
                 title={p.title}
                 image={p.image}
                 stats={p.stats}
+                specs={p.specs}
                 onImageClick={openLightbox}
               />
             ))}
-          </div>
 
-          {/* ── Row 2: VB Tower + Residential ── */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mb-16 sm:mb-24">
-
-            {/* VB Tower — standard card */}
-            <ProjectCard
-              title={bottomProject.title}
-              image={bottomProject.image}
-              stats={bottomProject.stats}
-              onImageClick={openLightbox}
-            />
-
-            {/* Residential Plot & Krishna — split but uniform style */}
-            <div className="bg-white border border-gray-100 rounded-2xl sm:rounded-3xl overflow-hidden shadow-md hover:-translate-y-2 hover:shadow-xl transition-all duration-500 flex flex-col">
+            {/* Residential Plot & Krishna — split card */}
+            <div className="bg-white border border-gray-100 rounded-2xl sm:rounded-3xl overflow-hidden shadow-md hover:-translate-y-2 hover:shadow-xl transition-all duration-500 flex flex-col h-full">
 
               {/* Image */}
               <div
@@ -248,11 +271,11 @@ const OurWork = () => {
               </div>
 
               {/* Body */}
-              <div className="p-5 sm:p-6 flex flex-col gap-4 flex-1">
+              <div className="p-5 sm:p-6 flex flex-col gap-4 flex-1 justify-between">
 
-                {/* Title — same badge as all other cards */}
+                {/* Title */}
                 <div className="flex items-center gap-3">
-                  <span className="w-8 h-8 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center flex-shrink-0">
+                  <span className="w-8 h-8 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center flex-shrink-0 shadow-sm shadow-cyan-500/20">
                     <Home className="w-4 h-4 text-white" />
                   </span>
                   <h4 className="text-sm sm:text-base font-bold text-gray-900 leading-snug">
@@ -260,24 +283,24 @@ const OurWork = () => {
                   </h4>
                 </div>
 
-                {/* Two-column stats — BOTH use same cyan */}
-                <div className="grid grid-cols-2 gap-x-4 gap-y-0">
+                {/* Two-column stats */}
+                <div className="grid grid-cols-2 gap-x-3 gap-y-0 pt-2 border-t border-gray-100">
                   {[residentialLeft, residentialRight].map((col, ci) => (
                     <div key={ci}>
                       {/* Sub-heading */}
-                      <p className="text-xs font-bold text-cyan-600 uppercase tracking-wider mb-2 pb-1 border-b border-cyan-100">
+                      <p className="text-[11px] font-bold text-cyan-600 uppercase tracking-wider mb-2 pb-1 border-b border-cyan-100 truncate">
                         {col.label}
                       </p>
                       {col.stats.map((s, si) => (
                         <div
                           key={si}
-                          className="flex items-center gap-2 py-2 border-b border-gray-100 last:border-0"
+                          className="flex items-center gap-1.5 py-1.5 border-b border-gray-100 last:border-0"
                         >
-                          <span className="w-6 h-6 rounded-md bg-cyan-50 border border-cyan-100 flex items-center justify-center flex-shrink-0">
-                            <s.icon className="w-3 h-3 text-cyan-600" />
+                          <span className="w-5 h-5 rounded-md bg-cyan-50 border border-cyan-100 flex items-center justify-center flex-shrink-0">
+                            <s.icon className="w-2.5 h-2.5 text-cyan-600" />
                           </span>
-                          <span className="text-xs text-gray-600 flex-1 leading-tight">{s.label}</span>
-                          <span className="text-xs font-bold text-cyan-600">{s.value}</span>
+                          <span className="text-[11px] text-gray-600 flex-1 leading-tight truncate">{s.label}</span>
+                          <span className="text-[11px] font-bold text-cyan-600">{s.value}</span>
                         </div>
                       ))}
                     </div>
@@ -307,7 +330,7 @@ const OurWork = () => {
               {/* Mobile Videos */}
               <div className="flex justify-center gap-6 sm:gap-12 mb-8 sm:mb-10 flex-wrap">
                 {[
-                  { src: vidChatbot,    label: "AI Chatbot" },
+                  { src: vidChatbot, label: "AI Chatbot" },
                   { src: vidAutomation, label: "WhatsApp Automation" },
                 ].map((v, i) => (
                   <div key={i} className="w-[130px] sm:w-[190px] flex flex-col items-center gap-3">

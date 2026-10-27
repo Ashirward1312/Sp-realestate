@@ -122,32 +122,32 @@ const About = () => {
             <div className="flex flex-col md:flex-row justify-center items-stretch gap-6 sm:gap-8">
 
               {[
-                { 
-                  border: "border-cyan-100", 
-                  bgLight: "bg-cyan-50", 
-                  textDark: "text-cyan-500", 
+                {
+                  border: "border-cyan-100",
+                  bgLight: "bg-cyan-50",
+                  textDark: "text-cyan-500",
                   Icon: Layers,
-                  label: "One Integrated Ecosystem.", 
-                  desc: "Connecting all your marketing, CRM, and sales efforts seamlessly.", 
-                  delay: "0s" 
+                  label: "One Integrated Ecosystem.",
+                  desc: "Connecting all your marketing, CRM, and sales efforts seamlessly.",
+                  delay: "0s"
                 },
-                { 
-                  border: "border-blue-100", 
-                  bgLight: "bg-blue-50", 
-                  textDark: "text-blue-500", 
+                {
+                  border: "border-blue-100",
+                  bgLight: "bg-blue-50",
+                  textDark: "text-blue-500",
                   Icon: TrendingUp,
-                  label: "One Growth Strategy.", 
-                  desc: "A unified, data-driven approach to scale your business efficiently.", 
-                  delay: "0.2s" 
+                  label: "One Growth Strategy.",
+                  desc: "A unified, data-driven approach to scale your business efficiently.",
+                  delay: "0.2s"
                 },
-                { 
-                  border: "border-indigo-100", 
-                  bgLight: "bg-indigo-50", 
-                  textDark: "text-indigo-500", 
+                {
+                  border: "border-indigo-100",
+                  bgLight: "bg-indigo-50",
+                  textDark: "text-indigo-500",
                   Icon: Users,
-                  label: "One Dedicated Team.", 
-                  desc: "Focused entirely on delivering results and maximizing your ROI.", 
-                  delay: "0.4s" 
+                  label: "One Dedicated Team.",
+                  desc: "Focused entirely on delivering results and maximizing your ROI.",
+                  delay: "0.4s"
                 },
               ].map((item, i) => (
                 <div

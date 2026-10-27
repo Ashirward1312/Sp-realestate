@@ -28,44 +28,38 @@ const Services = () => {
   return (
     <section
       id="services"
-      className="relative py-20 sm:py-28 overflow-hidden bg-gradient-to-br from-[#020617] via-[#0B1120] to-[#001B2E] text-white"
+      className="relative py-20 sm:py-28 overflow-hidden bg-gradient-to-b from-[#F8FAFC] via-white to-[#F1F5F9] text-slate-800"
     >
-      {/* Floating Micro Particles */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[...Array(30)].map((_, i) => (
-          <span
-            key={i}
-            className="absolute w-1 h-1 bg-cyan-400/30 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animation: `floatParticle ${5 + Math.random() * 5}s ${Math.random() * 5}s linear infinite`,
-            }}
-          />
-        ))}
-      </div>
+      {/* Soft Ambient Light Glows */}
+      <div className="absolute top-0 left-1/4 w-[350px] sm:w-[600px] h-[350px] sm:h-[600px] bg-cyan-400/10 blur-[140px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-[350px] sm:w-[600px] h-[350px] sm:h-[600px] bg-blue-500/10 blur-[140px] rounded-full pointer-events-none" />
 
-      {/* Glow */}
-      <div className="absolute top-0 left-0 w-[300px] sm:w-[600px] h-[300px] sm:h-[600px] bg-cyan-500/15 blur-[120px] sm:blur-[150px] rounded-full pointer-events-none"></div>
-      <div className="absolute bottom-0 right-0 w-[300px] sm:w-[600px] h-[300px] sm:h-[600px] bg-blue-500/15 blur-[120px] sm:blur-[150px] rounded-full pointer-events-none"></div>
+      {/* Subtle Grid Pattern Overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.035]"
+        style={{
+          backgroundImage: `radial-gradient(#0891b2 1px, transparent 1px)`,
+          backgroundSize: "28px 28px",
+        }}
+      />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
         <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-20">
-          <span className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 text-xs sm:text-sm font-semibold tracking-widest uppercase text-cyan-400 bg-cyan-500/10 rounded-full mb-5 sm:mb-6">
-            <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+          <span className="inline-flex items-center gap-2 px-4 sm:px-5 py-2 text-xs sm:text-sm font-semibold tracking-widest uppercase text-cyan-800 bg-cyan-100/80 border border-cyan-200/80 rounded-full mb-5 sm:mb-6 shadow-sm">
+            <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cyan-600" />
             Our Services
           </span>
 
-          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold mb-4 sm:mb-6 leading-tight">
+          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 mb-4 sm:mb-6 leading-tight">
             End-to-End Solutions for{" "}
-            <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent">
               Real Estate Growth
             </span>
           </h2>
 
-          <p className="text-gray-400 text-sm sm:text-base lg:text-lg leading-relaxed">
+          <p className="text-slate-600 text-sm sm:text-base lg:text-lg leading-relaxed">
             Everything you need to attract, convert, and scale your business —
             integrated into one powerful ecosystem.
           </p>
@@ -83,42 +77,42 @@ const Services = () => {
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
                 onClick={() => scrollTo("contact")}
-                className="group relative bg-white/5 backdrop-blur-xl border border-cyan-400/10 rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-xl hover:shadow-cyan-500/20 hover:-translate-y-2 sm:hover:-translate-y-3 transition-all duration-500 overflow-hidden cursor-pointer select-none"
+                className="group relative bg-white/90 backdrop-blur-md border border-slate-200/90 hover:border-cyan-400/80 rounded-2xl sm:rounded-3xl p-6 sm:p-8 shadow-sm hover:shadow-xl hover:shadow-cyan-500/10 hover:-translate-y-2 transition-all duration-500 overflow-hidden cursor-pointer select-none"
               >
-                {/* Glow on Hover */}
-                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 blur-2xl transition"></div>
+                {/* Subtle Glow on Hover */}
+                <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
                 {/* Icon */}
-                <div className="relative z-10 w-12 h-12 sm:w-16 sm:h-16 bg-cyan-500/10 rounded-xl sm:rounded-2xl flex items-center justify-center mb-5 sm:mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <Icon className="w-5 h-5 sm:w-7 sm:h-7 text-cyan-400" />
+                <div className="relative z-10 w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-cyan-50 to-blue-50 border border-cyan-100/80 rounded-xl sm:rounded-2xl flex items-center justify-center mb-5 sm:mb-6 group-hover:scale-110 group-hover:bg-gradient-to-br group-hover:from-cyan-500 group-hover:to-blue-600 transition-all duration-300 shadow-sm">
+                  <Icon className="w-5 h-5 sm:w-7 sm:h-7 text-cyan-600 group-hover:text-white transition-colors duration-300" />
                 </div>
 
                 {/* Title */}
                 <h3
                   className={`relative z-10 text-base sm:text-xl font-bold mb-3 sm:mb-4 transition-all duration-300 ${
                     isHovered
-                      ? "bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent"
-                      : "text-white"
+                      ? "text-cyan-700"
+                      : "text-slate-900"
                   }`}
                 >
                   {service.title}
                 </h3>
 
                 {/* Description */}
-                <p className="relative z-10 text-gray-400 text-xs sm:text-sm leading-relaxed mb-5 sm:mb-7">
+                <p className="relative z-10 text-slate-600 text-xs sm:text-sm leading-relaxed mb-5 sm:mb-7">
                   {service.description}
                 </p>
 
-                {/* Learn More — always visible, bolder on hover */}
-                <div className="relative z-10 flex items-center gap-2 text-xs sm:text-sm font-bold text-cyan-400 group-hover:text-cyan-300 transition-all duration-300">
-                  <span className="border-b border-cyan-400/40 group-hover:border-cyan-300 pb-0.5 transition-colors">
+                {/* Learn More */}
+                <div className="relative z-10 flex items-center gap-2 text-xs sm:text-sm font-bold text-cyan-600 group-hover:text-cyan-700 transition-all duration-300">
+                  <span className="border-b border-cyan-400/50 group-hover:border-cyan-600 pb-0.5 transition-colors">
                     Get Started
                   </span>
                   <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover:translate-x-1.5 transition-transform duration-300" />
                 </div>
 
                 {/* Corner Accent */}
-                <div className="absolute top-0 right-0 w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-cyan-400 to-blue-500 opacity-0 group-hover:opacity-20 rounded-bl-full transition-opacity"></div>
+                <div className="absolute top-0 right-0 w-20 h-20 sm:w-24 sm:h-24 bg-gradient-to-br from-cyan-400 to-blue-500 opacity-0 group-hover:opacity-10 rounded-bl-full transition-opacity" />
               </div>
             );
           })}
@@ -126,21 +120,21 @@ const Services = () => {
 
         {/* CTA */}
         <div className="mt-16 sm:mt-24 text-center">
-          <div className="inline-flex flex-col sm:flex-row items-center gap-5 sm:gap-6 p-7 sm:p-10 bg-white/5 backdrop-blur-xl rounded-2xl sm:rounded-3xl border border-cyan-400/20 shadow-2xl w-full sm:w-auto max-w-2xl mx-auto">
+          <div className="inline-flex flex-col sm:flex-row items-center gap-5 sm:gap-6 p-7 sm:p-10 bg-white/95 backdrop-blur-md rounded-2xl sm:rounded-3xl border border-cyan-200/90 shadow-xl shadow-slate-200/80 w-full sm:w-auto max-w-2xl mx-auto">
 
             <div className="text-center sm:text-left">
-              <h3 className="text-lg sm:text-2xl font-bold mb-2 flex items-center gap-2 justify-center sm:justify-start">
-                <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 text-cyan-400 flex-shrink-0" />
+              <h3 className="text-lg sm:text-2xl font-bold text-slate-900 mb-2 flex items-center gap-2 justify-center sm:justify-start">
+                <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6 text-cyan-600 flex-shrink-0" />
                 Ready to Scale Your Project?
               </h3>
-              <p className="text-gray-400 text-sm sm:text-base">
+              <p className="text-slate-600 text-sm sm:text-base">
                 Let's build a powerful real estate growth system together.
               </p>
             </div>
 
             <button
               onClick={() => scrollTo("contact")}
-              className="flex-shrink-0 w-full sm:w-auto px-7 sm:px-8 py-3.5 sm:py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-xl sm:rounded-2xl font-semibold shadow-lg hover:shadow-cyan-500/30 hover:-translate-y-1 active:scale-95 transition-all duration-300 flex items-center justify-center gap-2"
+              className="flex-shrink-0 w-full sm:w-auto px-7 sm:px-8 py-3.5 sm:py-4 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white rounded-xl sm:rounded-2xl font-semibold shadow-lg shadow-cyan-600/25 hover:shadow-cyan-600/40 hover:-translate-y-0.5 active:scale-95 transition-all duration-300 flex items-center justify-center gap-2"
             >
               Schedule Consultation
               <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -150,14 +144,6 @@ const Services = () => {
         </div>
 
       </div>
-
-      <style>{`
-        @keyframes floatParticle {
-          0% { transform: translateY(0px); opacity: 0.3; }
-          50% { transform: translateY(-20px); opacity: 0.8; }
-          100% { transform: translateY(0px); opacity: 0.3; }
-        }
-      `}</style>
     </section>
   );
 };

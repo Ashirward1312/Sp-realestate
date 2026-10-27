@@ -1,11 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import logoImg from "./Images/logo.jpeg";
 import { ArrowRight } from "lucide-react";
-
-const scrollTo = (id) => {
-  const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: "smooth" });
-};
 
 const Footer = () => {
   const scrollToTop = () => {
@@ -13,11 +9,12 @@ const Footer = () => {
   };
 
   const navLinks = [
-    { name: "Home", id: "home" },
-    { name: "About", id: "about" },
-    { name: "Services", id: "services" },
-    { name: "Our Work", id: "projects" },
-    { name: "Contact", id: "contact" },
+    { name: "Home", path: "/" },
+    { name: "About", path: "/about" },
+    { name: "Services", path: "/services" },
+    { name: "Our Work", path: "/our-work" },
+    { name: "Portfolio", path: "/portfolio" },
+    { name: "Contact", path: "/contact" },
   ];
 
   return (
@@ -30,7 +27,8 @@ const Footer = () => {
 
           {/* Brand – spans 2 cols on mobile */}
           <div className="col-span-2 lg:col-span-1">
-            <div
+            <Link
+              to="/"
               className="flex items-center gap-3 cursor-pointer mb-4"
               onClick={scrollToTop}
             >
@@ -49,7 +47,7 @@ const Footer = () => {
                   Real Estate Growth Systems
                 </p>
               </div>
-            </div>
+            </Link>
 
             <p className="text-gray-400 text-xs sm:text-sm leading-relaxed mb-5">
               Helping developers &amp; builders generate quality leads and scale sales using performance marketing &amp; automation.
@@ -83,13 +81,13 @@ const Footer = () => {
             </h4>
             <ul className="space-y-2.5 text-xs sm:text-sm text-gray-400">
               {navLinks.map((link) => (
-                <li key={link.id}>
-                  <button
-                    onClick={() => scrollTo(link.id)}
-                    className="hover:text-cyan-400 transition text-left"
+                <li key={link.path}>
+                  <Link
+                    to={link.path}
+                    className="hover:text-cyan-400 transition"
                   >
                     {link.name}
-                  </button>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -133,13 +131,13 @@ const Footer = () => {
                 </a>
               </div>
               <div>
-                <button
-                  onClick={() => scrollTo("contact")}
+                <Link
+                  to="/contact"
                   className="mt-2 flex items-center gap-1.5 text-cyan-400 hover:text-cyan-300 font-semibold transition"
                 >
                   Get in Touch
                   <ArrowRight size={13} />
-                </button>
+                </Link>
               </div>
             </div>
           </div>
