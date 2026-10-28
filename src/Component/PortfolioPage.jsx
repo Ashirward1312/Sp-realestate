@@ -1,7 +1,18 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import { X, Play, Image as ImageIcon, Film, ZoomIn, ChevronLeft, ChevronRight, Smartphone, Monitor } from "lucide-react";
+import React, { useState, useEffect, useRef } from "react";
+import {
+  X,
+  Image as ImageIcon,
+  Film,
+  ZoomIn,
+  ChevronLeft,
+  ChevronRight,
+  Smartphone,
+  Monitor,
+  Volume2,
+  VolumeX,
+} from "lucide-react";
 
-
+// ── Import Artboard & C images ──
 import artboard8 from "../Component/Images/Artboard 8-DUvOq2a_.webp";
 import c13 from "../Component/Images/c13-Dq6mWYtk.webp";
 import c14 from "../Component/Images/c14-D4186Dgq.webp";
@@ -14,6 +25,11 @@ import img1 from "../Component/Images/img1.webp";
 import img2 from "../Component/Images/img2.webp";
 import img3 from "../Component/Images/img3.webp";
 import img4 from "../Component/Images/img4.webp";
+
+// ── Import Godrej Post Images ──
+import godrejPost1 from "../Component/Images/godrej property meta ads creative.png";
+import godrejPost2 from "../Component/Images/godrej property meta ads creative  (1080 x 1080 px).png";
+import godrejPost3 from "../Component/Images/godrej property meta ads creative  (1080 x 1080 px) (1).png";
 
 // ── Import all videos ──
 import vidClassicCastle from "../Component/Images/Classic castle.mp4";
@@ -31,34 +47,35 @@ import vidKs from "../Component/Images/ks video.mp4";
 import vidMagneto from "../Component/Images/magneto signature.mp4";
 import vidRathis from "../Component/Images/rathis build mart.mp4";
 
-
 /* ─── Media Data ─── */
 const images = [
+  { src: godrejPost1 },
+  { src: godrejPost2 },
+  { src: godrejPost3 },
   { src: img1 },
   { src: img2 },
   { src: img3 },
   { src: img4 },
-
-  { src: artboard8},
-  { src: c4},
-  { src: c5},
-  { src: c6},
-  { src: c13},
-  { src: c14},
+  { src: artboard8 },
+  { src: c4 },
+  { src: c5 },
+  { src: c6 },
+  { src: c13 },
+  { src: c14 },
 ];
 
 const videos = [
-  { src: vidClassicCastle },
   { src: vidGodrej },
+  { src: vidClassicCastle },
   { src: vidRaisInfinity },
   { src: vidOmayaAmenities },
   { src: vidOmayaHotel },
   { src: vidOmayaRoom },
   { src: vidAnandanCity },
   { src: vidAvinash },
-  { src: vidDreamHomes},
-  { src: vidKs},
-  { src: vidKs2},
+  { src: vidDreamHomes },
+  { src: vidKs },
+  { src: vidKs2 },
   { src: vidMagneto },
   { src: vidRathis },
   { src: vidMultiplex },
@@ -108,7 +125,7 @@ const useVideoOrientation = (videoList) => {
 };
 
 /* ═══════════════════════════════════════════
-   IMAGE LIGHTBOX MODAL
+   IMAGE LIGHTBOX MODAL (For Creative tab)
    ═══════════════════════════════════════════ */
 const ImageLightbox = ({ src, title, onClose, onPrev, onNext }) => {
   useEffect(() => {
@@ -148,11 +165,13 @@ const ImageLightbox = ({ src, title, onClose, onPrev, onNext }) => {
         </button>
         <img
           src={src}
-          alt={title}
+          alt={title || "Creative Post"}
           className="w-full max-h-[88vh] object-contain rounded-2xl shadow-2xl"
         />
         {title && (
-          <p className="text-center text-white/60 text-sm mt-4 font-medium">{title}</p>
+          <p className="text-center text-white/80 text-sm mt-4 font-semibold tracking-wide">
+            {title}
+          </p>
         )}
       </div>
     </div>
@@ -160,72 +179,39 @@ const ImageLightbox = ({ src, title, onClose, onPrev, onNext }) => {
 };
 
 /* ═══════════════════════════════════════════
-   VIDEO LIGHTBOX MODAL (supports reel & wide)
+   REEL VIDEO CARD (Vertical / Portrait — Continuous Autoplay, No Click Open)
    ═══════════════════════════════════════════ */
-const VideoLightbox = ({ src, title, onClose, isReel }) => {
-  useEffect(() => {
-    const onKey = (e) => {
-      if (e.key === "Escape") onClose();
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [onClose]);
-
-  if (!src) return null;
-  return (
-    <div
-      className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-md flex items-center justify-center p-4"
-      onClick={onClose}
-    >
-      <div
-        className={`relative ${isReel ? "max-w-sm" : "max-w-5xl"} w-full`}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <button
-          onClick={onClose}
-          className="absolute -top-12 right-0 text-white/80 hover:text-white transition flex items-center gap-1.5 text-sm font-medium z-10"
-        >
-          <X size={18} /> Close
-        </button>
-        <div className="rounded-2xl overflow-hidden shadow-2xl bg-black">
-          <video
-            src={src}
-            controls
-            autoPlay
-            className={`w-full object-contain ${isReel ? "max-h-[85vh]" : "max-h-[82vh]"}`}
-          />
-        </div>
-        {title && (
-          <p className="text-center text-white/60 text-sm mt-4 font-medium">{title}</p>
-        )}
-      </div>
-    </div>
-  );
-};
-
-/* ═══════════════════════════════════════════
-   REEL VIDEO CARD (Vertical / Portrait — Compact & Autoplaying)
-   ═══════════════════════════════════════════ */
-const ReelVideoCard = ({ video, onClick }) => {
+const ReelVideoCard = ({ video }) => {
   const videoRef = useRef(null);
-  const [isHovered, setIsHovered] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
 
   useEffect(() => {
     const el = videoRef.current;
     if (el) {
       el.muted = true;
       el.defaultMuted = true;
-      el.play().catch(() => {});
+      el.playsInline = true;
+      const playPromise = el.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          el.muted = true;
+          el.play().catch(() => {});
+        });
+      }
     }
   }, []);
 
+  const toggleSound = (e) => {
+    e.stopPropagation();
+    if (videoRef.current) {
+      const nextMuted = !isMuted;
+      videoRef.current.muted = nextMuted;
+      setIsMuted(nextMuted);
+    }
+  };
+
   return (
-    <div
-      className="group relative rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer border border-white/10 hover:border-pink-400/40 bg-black/60 shadow-lg hover:shadow-2xl hover:shadow-pink-500/20 transition-all duration-500 hover:-translate-y-1.5"
-      onClick={onClick}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
+    <div className="group relative rounded-2xl sm:rounded-3xl overflow-hidden border border-white/10 hover:border-pink-400/40 bg-black/60 shadow-lg hover:shadow-2xl hover:shadow-pink-500/20 transition-all duration-500 select-none">
       <div className="relative overflow-hidden bg-black" style={{ aspectRatio: "9/16" }}>
         <video
           ref={videoRef}
@@ -235,46 +221,46 @@ const ReelVideoCard = ({ video, onClick }) => {
           loop
           playsInline
           preload="auto"
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+          disablePictureInPicture
+          controlsList="nodownload nofullscreen noremoteplayback"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 pointer-events-none"
         />
 
         {/* Reel badge */}
         <div className="absolute top-2.5 left-2.5 z-10">
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[10px] font-semibold text-white/90 shadow">
+          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/15 text-[10px] font-semibold text-white/90 shadow">
             <Smartphone size={10} className="text-pink-400" /> Reel
           </span>
         </div>
 
-        {/* Play Button Overlay on hover */}
-        <div
-          className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ${
-            isHovered ? "bg-black/25" : "bg-transparent"
-          }`}
+        {/* Audio Mute/Unmute Toggle */}
+        <button
+          type="button"
+          onClick={toggleSound}
+          title={isMuted ? "Click to unmute sound" : "Click to mute sound"}
+          className="absolute top-2.5 right-2.5 z-10 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/60 hover:bg-black/85 backdrop-blur-md border border-white/20 flex items-center justify-center text-white/90 hover:text-white transition shadow cursor-pointer active:scale-90"
         >
-          <div
-            className={`w-11 h-11 sm:w-12 sm:h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
-              isHovered
-                ? "bg-gradient-to-br from-pink-500 to-purple-600 scale-100 opacity-100 shadow-xl shadow-pink-500/50"
-                : "bg-white/20 backdrop-blur-sm border border-white/30 scale-90 opacity-0 group-hover:opacity-100"
-            }`}
-          >
-            <Play
-              className="w-5 h-5 ml-0.5 text-white"
-              fill="white"
-            />
-          </div>
-        </div>
+          {isMuted ? (
+            <VolumeX size={13} className="text-white/70" />
+          ) : (
+            <Volume2 size={13} className="text-pink-400" />
+          )}
+        </button>
 
-        {/* Bottom gradient */}
-        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent p-3 sm:p-3.5 pt-8">
+        {/* Bottom Info Bar */}
+        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/95 via-black/55 to-transparent p-3 sm:p-3.5 pt-8">
           {video.title && (
-            <p className="text-xs sm:text-sm font-bold text-white leading-tight line-clamp-2 mb-1">
+            <p className="text-xs sm:text-sm font-bold text-white leading-tight line-clamp-2 mb-1.5">
               {video.title}
             </p>
           )}
-          <span className="text-[10px] text-pink-300/90 inline-flex items-center gap-1 font-medium">
-            Tap to open
-          </span>
+          <div className="flex items-center justify-between">
+            <span className="inline-flex items-center gap-1.5 text-[10px] text-pink-300 font-medium">
+              <span className="w-1.5 h-1.5 rounded-full bg-pink-400 animate-pulse" />
+              Autoplaying
+            </span>
+            <span className="text-[9px] text-white/40 tracking-wider font-semibold uppercase">Loop</span>
+          </div>
         </div>
       </div>
     </div>
@@ -282,28 +268,39 @@ const ReelVideoCard = ({ video, onClick }) => {
 };
 
 /* ═══════════════════════════════════════════
-   WIDE VIDEO CARD (Landscape / Horizontal — Autoplaying)
+   WIDE VIDEO CARD (Landscape / Horizontal — Continuous Autoplay, No Click Open)
    ═══════════════════════════════════════════ */
-const WideVideoCard = ({ video, onClick }) => {
+const WideVideoCard = ({ video }) => {
   const videoRef = useRef(null);
-  const [isHovered, setIsHovered] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
 
   useEffect(() => {
     const el = videoRef.current;
     if (el) {
       el.muted = true;
       el.defaultMuted = true;
-      el.play().catch(() => {});
+      el.playsInline = true;
+      const playPromise = el.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          el.muted = true;
+          el.play().catch(() => {});
+        });
+      }
     }
   }, []);
 
+  const toggleSound = (e) => {
+    e.stopPropagation();
+    if (videoRef.current) {
+      const nextMuted = !isMuted;
+      videoRef.current.muted = nextMuted;
+      setIsMuted(nextMuted);
+    }
+  };
+
   return (
-    <div
-      className="group relative rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer border border-white/10 hover:border-cyan-400/30 bg-black/40 hover:shadow-2xl hover:shadow-cyan-500/15 transition-all duration-500 hover:-translate-y-1.5"
-      onClick={onClick}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
+    <div className="group relative rounded-2xl sm:rounded-3xl overflow-hidden border border-white/10 hover:border-cyan-400/30 bg-black/40 hover:shadow-2xl hover:shadow-cyan-500/15 transition-all duration-500 select-none">
       <div className="relative overflow-hidden bg-black" style={{ aspectRatio: "16/9" }}>
         <video
           ref={videoRef}
@@ -313,7 +310,9 @@ const WideVideoCard = ({ video, onClick }) => {
           loop
           playsInline
           preload="auto"
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+          disablePictureInPicture
+          controlsList="nodownload nofullscreen noremoteplayback"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 pointer-events-none"
         />
 
         {/* Wide badge */}
@@ -323,45 +322,43 @@ const WideVideoCard = ({ video, onClick }) => {
           </span>
         </div>
 
-        {/* Live indicator badge */}
-        <div className="absolute top-3 right-3 z-10">
-          <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-cyan-500/20 backdrop-blur-md border border-cyan-400/30 text-[9px] font-bold text-cyan-300">
+        {/* Live indicator & Audio Toggle */}
+        <div className="absolute top-3 right-3 z-10 flex items-center gap-2">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-cyan-500/20 backdrop-blur-md border border-cyan-400/30 text-[9px] sm:text-[10px] font-bold text-cyan-300">
             <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
             LIVE
           </span>
-        </div>
 
-        {/* Play Button Overlay */}
-        <div
-          className={`absolute inset-0 flex items-center justify-center transition-all duration-300 ${
-            isHovered ? "bg-black/20" : "bg-transparent"
-          }`}
-        >
-          <div
-            className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center transition-all duration-400 ${
-              isHovered
-                ? "bg-gradient-to-br from-cyan-500 to-blue-600 scale-100 opacity-100 shadow-xl shadow-cyan-500/50"
-                : "bg-white/20 backdrop-blur-sm border border-white/30 scale-90 opacity-0 group-hover:opacity-100"
-            }`}
+          <button
+            type="button"
+            onClick={toggleSound}
+            title={isMuted ? "Click to unmute sound" : "Click to mute sound"}
+            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-black/60 hover:bg-black/85 backdrop-blur-md border border-white/20 flex items-center justify-center text-white/90 hover:text-white transition shadow cursor-pointer active:scale-90"
           >
-            <Play
-              className="w-6 h-6 sm:w-7 sm:h-7 ml-0.5 text-white"
-              fill="white"
-            />
-          </div>
+            {isMuted ? (
+              <VolumeX size={13} className="text-white/70" />
+            ) : (
+              <Volume2 size={13} className="text-cyan-400" />
+            )}
+          </button>
         </div>
       </div>
 
       {/* Title Bar */}
-      <div className="p-4 sm:p-5 flex items-center gap-3">
-        <span className="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-cyan-500/20">
-          <Film className="w-4 h-4 text-white" />
-        </span>
-        <div className="min-w-0">
-          <p className="text-sm sm:text-base font-bold text-white/90 truncate group-hover:text-cyan-400 transition-colors">
-            {video.title || "Walkthrough Video"}
-          </p>
-          <p className="text-[11px] text-white/40 mt-0.5">Click to watch full video</p>
+      <div className="p-4 sm:p-5 flex items-center justify-between gap-3 bg-gradient-to-b from-black/20 to-black/60 border-t border-white/[0.05]">
+        <div className="flex items-center gap-3 min-w-0">
+          <span className="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-cyan-500/20">
+            <Film className="w-4 h-4 text-white" />
+          </span>
+          <div className="min-w-0">
+            <p className="text-sm sm:text-base font-bold text-white/90 truncate group-hover:text-cyan-400 transition-colors">
+              {video.title || "Walkthrough Video"}
+            </p>
+            <div className="flex items-center gap-1.5 text-[11px] text-cyan-300/80 font-medium mt-0.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+              Autoplaying in continuous loop
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -369,9 +366,9 @@ const WideVideoCard = ({ video, onClick }) => {
 };
 
 /* ═══════════════════════════════════════════
-   REEL GRID — Compact 3-Column Grid (3 top, 3 bottom)
+   REEL GRID — Compact 3-Column Grid
    ═══════════════════════════════════════════ */
-const ReelGrid = ({ reelVideos, onVideoClick }) => {
+const ReelGrid = ({ reelVideos }) => {
   if (reelVideos.length === 0) return null;
 
   return (
@@ -388,11 +385,7 @@ const ReelGrid = ({ reelVideos, onVideoClick }) => {
       {/* Compact 3-Column Reel Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3.5 sm:gap-5 max-w-[760px] mx-auto">
         {reelVideos.map((vid, idx) => (
-          <ReelVideoCard
-            key={`reel-${idx}`}
-            video={vid}
-            onClick={() => onVideoClick(vid.src, vid.title, true)}
-          />
+          <ReelVideoCard key={`reel-${idx}`} video={vid} />
         ))}
       </div>
     </div>
@@ -405,19 +398,14 @@ const ReelGrid = ({ reelVideos, onVideoClick }) => {
 const PortfolioPage = () => {
   const [activeTab, setActiveTab] = useState("creative");
   const [imgLightbox, setImgLightbox] = useState({ index: -1 });
-  const [vidLightbox, setVidLightbox] = useState({ src: null, title: "", isReel: false });
   const sectionRef = useRef(null);
 
   // Auto-detect reel vs wide
   const orientations = useVideoOrientation(videos);
   const allDetected = Object.keys(orientations).length === videos.length;
 
-  const reelVideos = allDetected
-    ? videos.filter((_, i) => orientations[i] === "reel")
-    : [];
-  const wideVideos = allDetected
-    ? videos.filter((_, i) => orientations[i] === "wide")
-    : videos;
+  const reelVideos = allDetected ? videos.filter((_, i) => orientations[i] === "reel") : [];
+  const wideVideos = allDetected ? videos.filter((_, i) => orientations[i] === "wide") : videos;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -437,13 +425,9 @@ const PortfolioPage = () => {
     }));
   };
 
-  // Video lightbox handlers
-  const openVideo = (src, title, isReel = false) => setVidLightbox({ src, title, isReel });
-  const closeVideo = () => setVidLightbox({ src: null, title: "", isReel: false });
-
   return (
     <>
-      {/* Image Lightbox */}
+      {/* Image Lightbox (for Creative tab images) */}
       {imgLightbox.index >= 0 && (
         <ImageLightbox
           src={images[imgLightbox.index]?.src}
@@ -453,14 +437,6 @@ const PortfolioPage = () => {
           onNext={nextImage}
         />
       )}
-
-      {/* Video Lightbox */}
-      <VideoLightbox
-        src={vidLightbox.src}
-        title={vidLightbox.title}
-        onClose={closeVideo}
-        isReel={vidLightbox.isReel}
-      />
 
       <section
         ref={sectionRef}
@@ -472,7 +448,6 @@ const PortfolioPage = () => {
         <div className="absolute top-1/3 right-1/4 w-[300px] h-[300px] bg-purple-500/5 blur-[120px] rounded-full pointer-events-none" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
-
           {/* ── Page Header ── */}
           <div className="text-center mb-12 sm:mb-16" style={{ animation: "fadeUp 0.8s ease both" }}>
             <span className="inline-flex items-center gap-2 px-5 py-2 text-xs sm:text-sm font-semibold tracking-widest uppercase text-cyan-400 bg-cyan-500/10 rounded-full mb-5">
@@ -488,16 +463,12 @@ const PortfolioPage = () => {
             </h1>
 
             <p className="text-gray-400 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed">
-              Explore our stunning collection of real estate marketing campaigns —
-              from visual creatives to promotional videos.
+              Explore our stunning collection of real estate marketing campaigns — from visual creatives to promotional walkthrough videos.
             </p>
           </div>
 
           {/* ── Tab Bar ── */}
-          <div
-            className="flex justify-center mb-10 sm:mb-14"
-            style={{ animation: "fadeUp 0.8s 0.2s ease both" }}
-          >
+          <div className="flex justify-center mb-10 sm:mb-14" style={{ animation: "fadeUp 0.8s 0.2s ease both" }}>
             <div className="inline-flex bg-white/5 backdrop-blur-xl border border-cyan-400/15 rounded-2xl p-1.5 gap-1">
               {TABS.map((tab) => {
                 const Icon = tab.icon;
@@ -507,7 +478,7 @@ const PortfolioPage = () => {
                   <button
                     key={tab.key}
                     onClick={() => setActiveTab(tab.key)}
-                    className={`flex items-center gap-2 px-5 sm:px-7 py-2.5 sm:py-3 rounded-xl text-sm sm:text-base font-semibold transition-all duration-300 ${
+                    className={`flex items-center gap-2 px-5 sm:px-7 py-2.5 sm:py-3 rounded-xl text-sm sm:text-base font-semibold transition-all duration-300 cursor-pointer ${
                       isActive
                         ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/30"
                         : "text-gray-400 hover:text-white hover:bg-white/5"
@@ -521,12 +492,9 @@ const PortfolioPage = () => {
             </div>
           </div>
 
-          {/* ── CREATIVE SECTION — Compact & Clear ── */}
+          {/* ── CREATIVE SECTION — Godrej Posts & Creatives ── */}
           {activeTab === "creative" && (
-            <div
-              className="mb-8"
-              style={{ animation: "fadeUp 0.5s ease both" }}
-            >
+            <div className="mb-8" style={{ animation: "fadeUp 0.5s ease both" }}>
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
                 {images.map((img, index) => (
                   <div
@@ -534,21 +502,27 @@ const PortfolioPage = () => {
                     className="group relative rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer border border-white/[0.06] hover:border-cyan-400/30 bg-white/[0.02] transition-all duration-500 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-cyan-500/15"
                     onClick={() => openImage(index)}
                   >
-                    {/* Image — fixed aspect for compact clear display */}
-                    <div className="overflow-hidden" style={{ aspectRatio: "4/5" }}>
-                      <img
-                        src={img.src}
-                        alt={img.title}
-                        loading="lazy"
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                      />
+                    {/* ✅ FIX: image cut nahi hogi (object-contain + padding). Same premium card, same grid. */}
+                    <div
+                      className="relative overflow-hidden bg-gradient-to-br from-white/[0.04] via-white/[0.015] to-black/40"
+                      style={{ aspectRatio: "4/5" }}
+                    >
+                      {/* subtle inner frame for premium look */}
+                      <div className="absolute inset-0 p-2 sm:p-3">
+                        <div className="w-full h-full rounded-lg sm:rounded-xl bg-black/30 border border-white/10 overflow-hidden">
+                          <img
+                            src={img.src}
+                            alt={img.title}
+                            loading="lazy"
+                            className="w-full h-full object-contain"
+                          />
+                        </div>
+                      </div>
                     </div>
 
                     {/* Hover Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3 sm:p-4">
-                      <p className="text-white text-xs sm:text-sm font-bold truncate">
-                        {img.title}
-                      </p>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3 sm:p-4">
+                      <p className="text-white text-xs sm:text-sm font-bold truncate">{img.title}</p>
                       <span className="inline-flex items-center gap-1 text-cyan-400 text-[10px] sm:text-xs mt-1 font-semibold">
                         <ZoomIn size={12} /> View Full
                       </span>
@@ -559,29 +533,27 @@ const PortfolioPage = () => {
             </div>
           )}
 
-          {/* ── WALKTHROUGHS & REELS SECTION ── */}
+          {/* ── WALKTHROUGHS & REELS SECTION (Autoplaying, No Popup on Click) ── */}
           {activeTab === "walkthroughs" && (
             <div style={{ animation: "fadeUp 0.5s ease both" }}>
-
               {/* ── Reels 3-Column Grid ── */}
               {reelVideos.length > 0 && (
                 <div className="mb-12 sm:mb-16">
-                  <ReelGrid
-                    reelVideos={reelVideos}
-                    onVideoClick={openVideo}
-                  />
+                  <ReelGrid reelVideos={reelVideos} />
                 </div>
               )}
 
               {/* ── Wide Videos Grid ── */}
               {wideVideos.length > 0 && (
                 <div>
-                  {/* Section Label — only show if we have both types */}
+                  {/* Section Label */}
                   {reelVideos.length > 0 && (
                     <div className="flex items-center gap-3 mb-5">
                       <span className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-cyan-500/15 to-blue-500/15 border border-cyan-400/20">
                         <Monitor size={14} className="text-cyan-400" />
-                        <span className="text-xs sm:text-sm font-bold text-cyan-400 tracking-wide uppercase">Walkthroughs</span>
+                        <span className="text-xs sm:text-sm font-bold text-cyan-400 tracking-wide uppercase">
+                          Walkthroughs
+                        </span>
                       </span>
                       <div className="flex-1 h-px bg-gradient-to-r from-cyan-500/20 to-transparent" />
                     </div>
@@ -589,11 +561,7 @@ const PortfolioPage = () => {
 
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 sm:gap-7">
                     {wideVideos.map((vid, index) => (
-                      <WideVideoCard
-                        key={`wide-${index}`}
-                        video={vid}
-                        onClick={() => openVideo(vid.src, vid.title, false)}
-                      />
+                      <WideVideoCard key={`wide-${index}`} video={vid} />
                     ))}
                   </div>
                 </div>

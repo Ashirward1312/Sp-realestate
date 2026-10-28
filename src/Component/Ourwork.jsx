@@ -1,17 +1,30 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  ArrowRight, TrendingUp, Users, MapPin,
-  CheckCircle, BarChart2, Home, X, ZoomIn,
-  Calendar, Layers, Globe
+  ArrowRight,
+  TrendingUp,
+  Users,
+  MapPin,
+  CheckCircle,
+  BarChart2,
+  Home,
+  X,
+  ZoomIn,
+  Calendar,
+  Layers,
+  Globe,
 } from "lucide-react";
+
 import imgClassic from "./Images/1.jpeg";
 import imgRais from "./Images/2.jpeg";
 import imgGodrej from "./Images/3.jpeg";
 import vb from "./Images/4.jpeg";
 import residential from "./Images/5.jpeg";
-import vidChatbot from "./Images/vid1.mp4";
-import vidAutomation from "./Images/vid2.mp4";
+
+// ✅ Only ONE reel video (vid4) used in Tech & Automation
+import vidTool from "./Images/vid4.mp4";
+
+// CRM video stays same
 import vidCrm from "./Images/vid3.mp4";
 
 /* ─────────────────────────────────────
@@ -34,8 +47,6 @@ const StatRow = ({ icon: Icon, label, value }) => (
    ───────────────────────────────────── */
 const ProjectCard = ({ title, image, stats, specs, onImageClick }) => (
   <div className="bg-white border border-gray-100 rounded-2xl sm:rounded-3xl overflow-hidden shadow-md hover:-translate-y-2 hover:shadow-xl transition-all duration-500 flex flex-col h-full">
-
-    {/* Image — only rendered when provided, no empty space if not present */}
     {image && (
       <div
         className="relative aspect-video overflow-hidden cursor-zoom-in group"
@@ -54,19 +65,21 @@ const ProjectCard = ({ title, image, stats, specs, onImageClick }) => (
       </div>
     )}
 
-    {/* Body */}
-    <div className={`p-5 sm:p-6 flex flex-col gap-4 flex-1 justify-between ${!image ? "pt-6 sm:pt-7" : ""}`}>
-
+    <div
+      className={`p-5 sm:p-6 flex flex-col gap-4 flex-1 justify-between ${
+        !image ? "pt-6 sm:pt-7" : ""
+      }`}
+    >
       <div>
-        {/* Title row */}
         <div className="flex items-center gap-3">
           <span className="w-8 h-8 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center flex-shrink-0 shadow-sm shadow-cyan-500/20">
             <Home className="w-4 h-4 text-white" />
           </span>
-          <h4 className="text-sm sm:text-base font-bold text-gray-900 leading-snug">{title}</h4>
+          <h4 className="text-sm sm:text-base font-bold text-gray-900 leading-snug">
+            {title}
+          </h4>
         </div>
 
-        {/* Optional Specs Badges */}
         {specs && specs.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mt-2.5">
             {specs.map((s, idx) => (
@@ -82,7 +95,6 @@ const ProjectCard = ({ title, image, stats, specs, onImageClick }) => (
         )}
       </div>
 
-      {/* Stats */}
       <div className="flex-1 flex flex-col justify-end">
         {stats.map((stat, i) => (
           <StatRow key={i} icon={stat.icon} label={stat.label} value={stat.value} />
@@ -114,9 +126,7 @@ const Lightbox = ({ src, title, onClose }) => {
           alt={title}
           className="w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl"
         />
-        {title && (
-          <p className="text-center text-white/60 text-sm mt-3 font-medium">{title}</p>
-        )}
+        {title && <p className="text-center text-white/60 text-sm mt-3 font-medium">{title}</p>}
       </div>
     </div>
   );
@@ -131,14 +141,10 @@ const OurWork = () => {
 
   const handleContactCTA = () => {
     const el = document.getElementById("contact");
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-    } else {
-      navigate("/contact");
-    }
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+    else navigate("/contact");
   };
 
-  /* All stats use the same icon + cyan colour — no rose, no blue */
   const projects = [
     {
       title: "Classic Castle",
@@ -154,7 +160,6 @@ const OurWork = () => {
       image: imgRais,
       stats: [
         { icon: Users, label: "Leads Provided", value: "60+" },
-        // { icon: BarChart2,   label: "Positive Responses",   value: "20+" },
         { icon: MapPin, label: "Site Visits", value: "20+" },
         { icon: CheckCircle, label: "Bookings", value: "2" },
       ],
@@ -194,7 +199,6 @@ const OurWork = () => {
     },
   ];
 
-  /* Residential split stays inside its own card but uniform cyan too */
   const residentialLeft = {
     label: "Residential Plot",
     stats: [
@@ -212,7 +216,6 @@ const OurWork = () => {
     ],
   };
 
-
   return (
     <>
       <Lightbox src={lightbox.src} title={lightbox.title} onClose={closeLightbox} />
@@ -221,29 +224,32 @@ const OurWork = () => {
         id="projects"
         className="relative bg-gradient-to-br from-white via-[#F6FBFF] to-[#EAF6FF] py-20 sm:py-28 lg:py-32 overflow-hidden"
       >
-        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-cyan-100/40 blur-[120px] rounded-full pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-blue-100/40 blur-[100px] rounded-full pointer-events-none"></div>
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-cyan-100/40 blur-[120px] rounded-full pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-blue-100/40 blur-[100px] rounded-full pointer-events-none" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
-
           {/* ── Header ── */}
           <div className="text-center mb-14 sm:mb-20">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-50 border border-cyan-200 mb-5">
               <BarChart2 className="w-3.5 h-3.5 text-cyan-600" />
-              <span className="text-xs sm:text-sm font-bold text-cyan-600 tracking-wider uppercase">Our Work</span>
+              <span className="text-xs sm:text-sm font-bold text-cyan-600 tracking-wider uppercase">
+                Our Work
+              </span>
             </div>
+
             <h2 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900 mb-4 sm:mb-5 leading-tight">
               We Let Our{" "}
               <span className="bg-gradient-to-r from-cyan-500 to-blue-600 bg-clip-text text-transparent">
                 Results Speak.
               </span>
             </h2>
+
             <p className="text-gray-500 text-sm sm:text-base lg:text-lg max-w-2xl mx-auto leading-relaxed">
               Real estate campaigns delivering measurable growth and bookings.
             </p>
           </div>
 
-          {/* ── Projects Grid: 3-Column Responsive Grid (3 top, 3 bottom) ── */}
+          {/* ── Projects Grid ── */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-16 sm:mb-24">
             {projects.map((p, i) => (
               <ProjectCard
@@ -258,8 +264,6 @@ const OurWork = () => {
 
             {/* Residential Plot & Krishna — split card */}
             <div className="bg-white border border-gray-100 rounded-2xl sm:rounded-3xl overflow-hidden shadow-md hover:-translate-y-2 hover:shadow-xl transition-all duration-500 flex flex-col h-full">
-
-              {/* Image */}
               <div
                 className="relative aspect-video overflow-hidden cursor-zoom-in group"
                 onClick={() => openLightbox(residential, "Residential Plot & Krishna Sattavam")}
@@ -276,10 +280,7 @@ const OurWork = () => {
                 </div>
               </div>
 
-              {/* Body */}
               <div className="p-5 sm:p-6 flex flex-col gap-4 flex-1 justify-between">
-
-                {/* Title */}
                 <div className="flex items-center gap-3">
                   <span className="w-8 h-8 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center flex-shrink-0 shadow-sm shadow-cyan-500/20">
                     <Home className="w-4 h-4 text-white" />
@@ -289,11 +290,9 @@ const OurWork = () => {
                   </h4>
                 </div>
 
-                {/* Two-column stats */}
                 <div className="grid grid-cols-2 gap-x-3 gap-y-0 pt-2 border-t border-gray-100">
                   {[residentialLeft, residentialRight].map((col, ci) => (
                     <div key={ci}>
-                      {/* Sub-heading */}
                       <p className="text-[11px] font-bold text-cyan-600 uppercase tracking-wider mb-2 pb-1 border-b border-cyan-100 truncate">
                         {col.label}
                       </p>
@@ -305,24 +304,26 @@ const OurWork = () => {
                           <span className="w-5 h-5 rounded-md bg-cyan-50 border border-cyan-100 flex items-center justify-center flex-shrink-0">
                             <s.icon className="w-2.5 h-2.5 text-cyan-600" />
                           </span>
-                          <span className="text-[11px] text-gray-600 flex-1 leading-tight truncate">{s.label}</span>
+                          <span className="text-[11px] text-gray-600 flex-1 leading-tight truncate">
+                            {s.label}
+                          </span>
                           <span className="text-[11px] font-bold text-cyan-600">{s.value}</span>
                         </div>
                       ))}
                     </div>
                   ))}
                 </div>
-
               </div>
             </div>
-
           </div>
 
           {/* ── Tech & Automation ── */}
           <div className="mb-14 sm:mb-16">
             <div className="text-center mb-8 sm:mb-12">
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-50 border border-cyan-200 mb-4">
-                <span className="text-xs sm:text-sm font-bold text-cyan-600 tracking-wider uppercase">Tech &amp; Automation</span>
+                <span className="text-xs sm:text-sm font-bold text-cyan-600 tracking-wider uppercase">
+                  Tech &amp; Automation
+                </span>
               </div>
               <h3 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-gray-900">
                 Our Digital Tools in Action
@@ -333,28 +334,60 @@ const OurWork = () => {
             </div>
 
             <div className="max-w-4xl mx-auto">
-              {/* Mobile Videos */}
-              <div className="flex justify-center gap-6 sm:gap-12 mb-8 sm:mb-10 flex-wrap">
-                {[
-                  { src: vidChatbot, label: "AI Chatbot" },
-                  { src: vidAutomation, label: "WhatsApp Automation" },
-                ].map((v, i) => (
-                  <div key={i} className="w-[130px] sm:w-[190px] flex flex-col items-center gap-3">
-                    <div className="rounded-2xl sm:rounded-3xl overflow-hidden shadow-xl border border-gray-200 bg-black w-full">
-                      <video src={v.src} autoPlay loop muted playsInline className="w-full h-auto object-contain" />
-                    </div>
-                    <span className="flex items-center gap-1.5 text-xs sm:text-sm text-gray-500 font-semibold">
-                      <CheckCircle className="w-3.5 h-3.5 text-cyan-500" />
-                      {v.label}
-                    </span>
+              {/* ✅ ONLY ONE REEL (vid4) — AI Chatbot / WhatsApp Automation removed */}
+              <div className="flex justify-center mb-8 sm:mb-10">
+                <div className="w-[210px] sm:w-[240px] md:w-[260px] flex flex-col items-center gap-3">
+                  <div
+                    className="relative w-full rounded-[28px] sm:rounded-[36px] overflow-hidden shadow-2xl border border-gray-200 bg-black"
+                    style={{ aspectRatio: "9 / 16" }}
+                  >
+                    {/* Blurred background fill (premium) */}
+                    <video
+                      src={vidTool}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      preload="auto"
+                      aria-hidden="true"
+                      className="absolute inset-0 w-full h-full object-cover blur-2xl scale-110 opacity-35"
+                    />
+                    <div className="absolute inset-0 bg-black/25" />
+
+                    {/* Foreground video (no crop) */}
+                    <video
+                      src={vidTool}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      preload="auto"
+                      className="absolute inset-0 w-full h-full object-contain"
+                    />
+
+                    <div className="absolute inset-2 sm:inset-2.5 rounded-[22px] sm:rounded-[30px] border border-white/15 pointer-events-none" />
                   </div>
-                ))}
+
+                  {/* Optional single label (generic) */}
+                  <span className="flex items-center gap-1.5 text-xs sm:text-sm text-gray-500 font-semibold">
+                    <CheckCircle className="w-3.5 h-3.5 text-cyan-500" />
+                    Automation Demo
+                  </span>
+                </div>
               </div>
 
               {/* CRM */}
               <div className="max-w-3xl mx-auto">
                 <div className="rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border border-gray-200 bg-black">
-                  <video src={vidCrm} autoPlay loop muted playsInline className="w-full h-auto object-contain" />
+                  <video
+                    src={vidCrm}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="auto"
+                    className="w-full h-auto object-contain"
+                  />
                 </div>
                 <p className="flex items-center justify-center gap-1.5 text-xs sm:text-sm text-gray-500 font-semibold mt-3">
                   <CheckCircle className="w-3.5 h-3.5 text-cyan-500" />
@@ -374,7 +407,6 @@ const OurWork = () => {
               <ArrowRight className="w-5 h-5" />
             </button>
           </div>
-
         </div>
       </section>
     </>
